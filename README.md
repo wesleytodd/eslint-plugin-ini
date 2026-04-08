@@ -146,12 +146,23 @@ rules: {
 
 ```javascript
 rules: {
-  'ini/require-field': [
+  'ini/npmrc-legacy-peer-deps': [
     'error', // error or warn
     'absent' // absent, true, false (as strings, uses this value directly in fixes)
   ]
 }
 ```
+
+**`npmrc-email`**: Remove deprecated email field
+
+```javascript
+rules: {
+  'ini/npmrc-email': [
+    'error' // error or warn
+  ]
+}
+```
+
 
 ### Usage with neovim/conform
 
