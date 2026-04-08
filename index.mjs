@@ -8,6 +8,7 @@ import duplicateKeys from './lib/rules/duplicate-keys.mjs';
 
 import npmrcRegistry from './lib/rules/npmrc/registry.mjs';
 import npmrcLegacyPeerDeps from './lib/rules/npmrc/legacy-peer-deps.mjs';
+import npmrcEmail from './lib/rules/npmrc/email.mjs';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
@@ -26,6 +27,7 @@ const plugin = {
     'duplicate-keys': duplicateKeys,
     'npmrc-registry': npmrcRegistry,
     'npmrc-legacy-peer-deps': npmrcLegacyPeerDeps,
+    'npmrc-email': npmrcEmail
   },
   configs: { }
 };
@@ -54,7 +56,8 @@ plugin.configs.npmrc = {
   rules: {
     ...plugin.configs.recommended.rules,
     'ini/npmrc-registry': ['warn', 'https://registry.npmjs.com/'],
-    'ini/npmrc-legacy-peer-deps': ['warn', 'absent']
+    'ini/npmrc-legacy-peer-deps': ['warn', 'absent'],
+    'ini/npmrc-email': ['error']
   }
 };
 
