@@ -163,6 +163,15 @@ rules: {
 }
 ```
 
+**`npmrc-always-auth`**: Remove deprecated always-auth field
+
+```javascript
+rules: {
+  'ini/npmrc-always-auth': [
+    'error' // error or warn
+  ]
+}
+```
 
 ### Usage with neovim/conform
 
