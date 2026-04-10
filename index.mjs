@@ -10,6 +10,7 @@ import npmrcRegistry from './lib/rules/npmrc/registry.mjs';
 import npmrcLegacyPeerDeps from './lib/rules/npmrc/legacy-peer-deps.mjs';
 import npmrcEmail from './lib/rules/npmrc/email.mjs';
 import npmrcAlwaysAuth from './lib/rules/npmrc/always-auth.mjs';
+import npmrcNoAuth from './lib/rules/npmrc/no-auth.mjs';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
@@ -29,7 +30,8 @@ const plugin = {
     'npmrc-registry': npmrcRegistry,
     'npmrc-legacy-peer-deps': npmrcLegacyPeerDeps,
     'npmrc-email': npmrcEmail,
-    'npmrc-always-auth': npmrcAlwaysAuth
+    'npmrc-always-auth': npmrcAlwaysAuth,
+    'npmrc-no-auth': npmrcNoAuth
   },
   configs: { }
 };
@@ -60,7 +62,8 @@ plugin.configs.npmrc = {
     'ini/npmrc-registry': ['warn', 'https://registry.npmjs.com/'],
     'ini/npmrc-legacy-peer-deps': ['warn', 'absent'],
     'ini/npmrc-email': ['error'],
-    'ini/npmrc-always-auth': ['error']
+    'ini/npmrc-always-auth': ['error'],
+    'ini/npmrc-no-auth': ['error']
   }
 };
 
