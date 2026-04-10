@@ -21,5 +21,8 @@ for (const conf of ns) {
 
 export default defineConfig([
   ...ns,
-  ini.configs.npmrc
+  {
+    ...ini.configs.npmrc,
+    files: ['.npmrc']
+  }
 ]);

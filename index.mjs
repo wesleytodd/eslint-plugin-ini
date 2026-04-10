@@ -56,7 +56,7 @@ plugin.configs.npmrc = {
     ini: plugin
   },
   language: 'ini/ini',
-  files: ['.npmrc'],
+  files: ['**/.npmrc'],
   rules: {
     ...plugin.configs.recommended.rules,
     'ini/npmrc-registry': ['warn', 'https://registry.npmjs.com/'],

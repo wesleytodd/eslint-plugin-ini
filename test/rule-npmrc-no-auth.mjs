@@ -25,31 +25,31 @@ suite('rule: npmrc-no-auth', () => {
 
     assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-no-auth');
     assert.strictEqual(results[0].messages[0].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[0].line, 7);
+    assert.strictEqual(results[0].messages[0].line, 8);
     assert.strictEqual(results[0].messages[0].column, 1);
-    assert.strictEqual(results[0].messages[0].endLine, 7);
+    assert.strictEqual(results[0].messages[0].endLine, 8);
     assert.strictEqual(results[0].messages[0].endColumn, 20);
 
     assert.strictEqual(results[0].messages[1].ruleId, 'ini/npmrc-no-auth');
     assert.strictEqual(results[0].messages[1].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[1].line, 8);
+    assert.strictEqual(results[0].messages[1].line, 9);
     assert.strictEqual(results[0].messages[1].column, 1);
-    assert.strictEqual(results[0].messages[1].endLine, 8);
-    assert.strictEqual(results[0].messages[1].endColumn, 20);
+    assert.strictEqual(results[0].messages[1].endLine, 9);
+    assert.strictEqual(results[0].messages[1].endColumn, 25);
 
     assert.strictEqual(results[0].messages[2].ruleId, 'ini/npmrc-no-auth');
     assert.strictEqual(results[0].messages[2].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[2].line, 9);
+    assert.strictEqual(results[0].messages[2].line, 10);
     assert.strictEqual(results[0].messages[2].column, 1);
-    assert.strictEqual(results[0].messages[2].endLine, 9);
-    assert.strictEqual(results[0].messages[2].endColumn, 20);
+    assert.strictEqual(results[0].messages[2].endLine, 10);
+    assert.strictEqual(results[0].messages[2].endColumn, 48);
 
     assert.strictEqual(results[0].messages[3].ruleId, 'ini/npmrc-no-auth');
     assert.strictEqual(results[0].messages[3].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[3].line, 10);
+    assert.strictEqual(results[0].messages[3].line, 11);
     assert.strictEqual(results[0].messages[3].column, 1);
-    assert.strictEqual(results[0].messages[3].endLine, 10);
-    assert.strictEqual(results[0].messages[3].endColumn, 20);
+    assert.strictEqual(results[0].messages[3].endLine, 11);
+    assert.strictEqual(results[0].messages[3].endColumn, 53);
   });
 
   test('remove auth in npmrc', async () => {
