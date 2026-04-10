@@ -1,16 +1,16 @@
 import fs from 'fs';
-import INIParser from './lib/language.mjs';
+import INIParser from './lib/language.js';
 
-import requireFieldRule from './lib/rules/require-field.mjs';
-import delimWhitespace from './lib/rules/delim-whitespace.mjs';
-import trailingWhitespace from './lib/rules/trailing-whitespace.mjs';
-import duplicateKeys from './lib/rules/duplicate-keys.mjs';
+import requireFieldRule from './lib/rules/require-field.js';
+import delimWhitespace from './lib/rules/delim-whitespace.js';
+import trailingWhitespace from './lib/rules/trailing-whitespace.js';
+import duplicateKeys from './lib/rules/duplicate-keys.js';
 
-import npmrcRegistry from './lib/rules/npmrc/registry.mjs';
-import npmrcLegacyPeerDeps from './lib/rules/npmrc/legacy-peer-deps.mjs';
-import npmrcEmail from './lib/rules/npmrc/email.mjs';
-import npmrcAlwaysAuth from './lib/rules/npmrc/always-auth.mjs';
-import npmrcNoAuth from './lib/rules/npmrc/no-auth.mjs';
+import npmrcRegistry from './lib/rules/npmrc/registry.js';
+import npmrcLegacyPeerDeps from './lib/rules/npmrc/legacy-peer-deps.js';
+import npmrcEmail from './lib/rules/npmrc/email.js';
+import npmrcAlwaysAuth from './lib/rules/npmrc/always-auth.js';
+import npmrcNoAuth from './lib/rules/npmrc/no-auth.js';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 

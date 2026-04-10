@@ -1,6 +1,6 @@
 import { suite, test } from 'mocha';
 import assert from 'node:assert';
-import { parse } from '../lib/parser/index.mjs';
+import { parse } from '../lib/parser/index.js';
 
 const COMMENTS = [';', '#'];
 const WHITESPACE = [' ', '\t'];

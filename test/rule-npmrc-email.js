@@ -1,10 +1,10 @@
 import { suite, test } from 'mocha';
 import { ESLint } from 'eslint';
 import assert from 'node:assert';
-import plugin from '../index.mjs';
+import plugin from '../index.js';
 
-suite('rule: npmrc-always-auth', () => {
-  test('no always-auth in npmrc', async () => {
+suite('rule: npmrc-email', () => {
+  test('no email in npmrc', async () => {
     const eslint = new ESLint({
       cwd: import.meta.dirname,
       overrideConfigFile: true,
@@ -15,7 +15,7 @@ suite('rule: npmrc-always-auth', () => {
         },
         language: 'ini/ini',
         rules: {
-          'ini/npmrc-always-auth': ['error']
+          'ini/npmrc-email': ['error']
         }
       }
     });
@@ -23,15 +23,15 @@ suite('rule: npmrc-always-auth', () => {
     assert.strictEqual(results.length, 1);
     assert.strictEqual(results[0].messages.length, 1);
 
-    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-always-auth');
-    assert.strictEqual(results[0].messages[0].message, 'always-auth is deprecated and should be removed');
-    assert.strictEqual(results[0].messages[0].line, 7);
+    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-email');
+    assert.strictEqual(results[0].messages[0].message, 'email is deprecated and should be removed');
+    assert.strictEqual(results[0].messages[0].line, 6);
     assert.strictEqual(results[0].messages[0].column, 1);
-    assert.strictEqual(results[0].messages[0].endLine, 7);
-    assert.strictEqual(results[0].messages[0].endColumn, 17);
+    assert.strictEqual(results[0].messages[0].endLine, 6);
+    assert.strictEqual(results[0].messages[0].endColumn, 20);
   });
 
-  test('remove always-auth in npmrc', async () => {
+  test('remove email in npmrc', async () => {
     const eslint = new ESLint({
       cwd: import.meta.dirname,
       fix: true,
@@ -43,11 +43,11 @@ suite('rule: npmrc-always-auth', () => {
         },
         language: 'ini/ini',
         rules: {
-          'ini/npmrc-always-auth': ['error']
+          'ini/npmrc-email': ['error']
         }
       }
     });
-    const results = await eslint.lintText('always-auth=true', {
+    const results = await eslint.lintText('email=foo@gmail.com', {
       filePath: '.npmrc'
     });
     assert.strictEqual(results.length, 1);

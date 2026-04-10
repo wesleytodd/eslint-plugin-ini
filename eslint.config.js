@@ -1,6 +1,6 @@
 import { defineConfig } from 'eslint/config';
 import neostandard from 'neostandard';
-import ini from './index.mjs';
+import ini from './index.js';
 
 const ns = neostandard({
   semi: true,

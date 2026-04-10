@@ -1,7 +1,7 @@
 import { suite, test } from 'mocha';
 import { ESLint } from 'eslint';
 import assert from 'node:assert';
-import plugin from '../index.mjs';
+import plugin from '../index.js';
 
 suite('rule: npmrc-registry', () => {
   test('require a default registry', async () => {

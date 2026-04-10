@@ -2,7 +2,7 @@
   "name": "eslint-plugin-ini",
   "version": "0.0.1",
   "description": "eslint plugin for processing ini files",
-  "main": "index.mjs",
+  "main": "index.js",
   "type": "module",
   "keywords": [
     "eslint",
