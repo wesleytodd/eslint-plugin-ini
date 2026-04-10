@@ -3,133 +3,71 @@ import { ESLint } from 'eslint';
 import assert from 'node:assert';
 import plugin from '../index.mjs';
 
-suite('eslint .npmrc rules', () => {
+suite('eslint npmrc config', () => {
   test('require a default registry', async () => {
     const eslint = new ESLint({
       cwd: import.meta.dirname,
       overrideConfigFile: true,
-      overrideConfig: {
-        files: ['.npmrc'],
-        plugins: {
-          ini: plugin
-        },
-        language: 'ini/ini',
-        rules: {
-          'ini/npmrc-registry': ['error', 'https://registry.npmjs.com/']
-        }
-      }
-    });
-    const results = await eslint.lintText('registry=http://registry.npmjs.org', {
-      filePath: '.npmrc'
-    });
-    assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 1);
-    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-registry');
-    assert.strictEqual(results[0].messages[0].message, 'registry is required to match https://registry.npmjs.com/');
-    assert.strictEqual(results[0].messages[0].line, 1);
-    assert.strictEqual(results[0].messages[0].column, 10);
-    assert.strictEqual(results[0].messages[0].endLine, 1);
-    assert.strictEqual(results[0].messages[0].endColumn, 35);
-  });
-
-  test('fix a default registry value', async () => {
-    const eslint = new ESLint({
-      cwd: import.meta.dirname,
-      fix: true,
-      overrideConfigFile: true,
-      overrideConfig: {
-        files: ['.npmrc'],
-        plugins: {
-          ini: plugin
-        },
-        language: 'ini/ini',
-        rules: {
-          'ini/npmrc-registry': ['error', 'https://registry.npmjs.com/']
-        }
-      }
-    });
-    const results = await eslint.lintText('registry=http://registry.npmjs.org', {
-      filePath: '.npmrc'
-    });
-    assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 0);
-    assert.strictEqual(results[0].output, 'registry=https://registry.npmjs.com/');
-  });
-
-  test('required and optional registries', async () => {
-    const eslint = new ESLint({
-      cwd: import.meta.dirname,
-      overrideConfigFile: true,
-      overrideConfig: {
-        files: ['fixtures/.npmrc'],
-        plugins: {
-          ini: plugin
-        },
-        language: 'ini/ini',
-        rules: {
-          'ini/npmrc-registry': ['error', {
-            default: 'https://registry.npmjs.com',
-            '@foo': {
-              url: 'https://registry.foo.com/',
-              required: true
-            },
-            '@bar': {
-              url: 'https://registry.bar.com/',
-              required: false
-            }
-          }, true]
-        }
-      }
+      overrideConfig: plugin.configs.npmrc
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 2);
+    assert.strictEqual(results[0].messages.length, 8);
 
-    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-registry');
-    assert.strictEqual(results[0].messages[0].message, 'registry is required to match https://registry.npmjs.com');
-    assert.strictEqual(results[0].messages[0].line, 1);
-    assert.strictEqual(results[0].messages[0].column, 10);
-    assert.strictEqual(results[0].messages[0].endLine, 1);
-    assert.strictEqual(results[0].messages[0].endColumn, 37);
+    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-legacy-peer-deps');
+    assert.strictEqual(results[0].messages[0].message, 'legacy-peer-deps should not be set');
+    assert.strictEqual(results[0].messages[0].line, 5);
+    assert.strictEqual(results[0].messages[0].column, 1);
+    assert.strictEqual(results[0].messages[0].endLine, 5);
+    assert.strictEqual(results[0].messages[0].endColumn, 22);
 
-    assert.strictEqual(results[0].messages[1].ruleId, 'ini/npmrc-registry');
-    assert.strictEqual(results[0].messages[1].message, 'unknown registry for @baz');
-    assert.strictEqual(results[0].messages[1].line, 4);
+    assert.strictEqual(results[0].messages[1].ruleId, 'ini/npmrc-email');
+    assert.strictEqual(results[0].messages[1].message, 'email is deprecated and should be removed');
+    assert.strictEqual(results[0].messages[1].line, 6);
     assert.strictEqual(results[0].messages[1].column, 1);
-    assert.strictEqual(results[0].messages[1].endLine, 4);
-    assert.strictEqual(results[0].messages[1].endColumn, 40);
-  });
+    assert.strictEqual(results[0].messages[1].endLine, 6);
+    assert.strictEqual(results[0].messages[1].endColumn, 20);
 
-  test('fix required and optional registries', async () => {
-    const eslint = new ESLint({
-      cwd: import.meta.dirname,
-      fix: true,
-      overrideConfigFile: true,
-      overrideConfig: {
-        files: ['fixtures/.npmrc'],
-        plugins: {
-          ini: plugin
-        },
-        language: 'ini/ini',
-        rules: {
-          'ini/npmrc-registry': ['error', {
-            // NOTE:: no trailing slash tests fixing values
-            default: 'https://registry.npmjs.com',
-            '@foo': {
-              url: 'https://registry.foo.com',
-              required: true
-            },
-            '@bar': {
-              url: 'https://registry.bar.com',
-              required: false
-            }
-          }, true]
-        }
-      }
-    });
-    const results = await eslint.lintFiles('fixtures/.npmrc');
-    assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 0);
-    assert.strictEqual(results[0].output, 'registry=https://registry.npmjs.com\n@foo:registry=https://registry.foo.com\n@bar:registry=https://registry.bar.com\nlegacy-peer-deps=true\n');
+    assert.strictEqual(results[0].messages[2].ruleId, 'ini/npmrc-always-auth');
+    assert.strictEqual(results[0].messages[2].message, 'always-auth is deprecated and should be removed');
+    assert.strictEqual(results[0].messages[2].line, 7);
+    assert.strictEqual(results[0].messages[2].column, 1);
+    assert.strictEqual(results[0].messages[2].endLine, 7);
+    assert.strictEqual(results[0].messages[2].endColumn, 17);
+
+    assert.strictEqual(results[0].messages[3].ruleId, 'ini/npmrc-no-auth');
+    assert.strictEqual(results[0].messages[3].message, 'remove auth tokens');
+    assert.strictEqual(results[0].messages[3].line, 8);
+    assert.strictEqual(results[0].messages[3].column, 1);
+    assert.strictEqual(results[0].messages[3].endLine, 8);
+    assert.strictEqual(results[0].messages[3].endColumn, 20);
+
+    assert.strictEqual(results[0].messages[4].ruleId, 'ini/npmrc-no-auth');
+    assert.strictEqual(results[0].messages[4].message, 'remove auth tokens');
+    assert.strictEqual(results[0].messages[4].line, 9);
+    assert.strictEqual(results[0].messages[4].column, 1);
+    assert.strictEqual(results[0].messages[4].endLine, 9);
+    assert.strictEqual(results[0].messages[4].endColumn, 25);
+
+    assert.strictEqual(results[0].messages[5].ruleId, 'ini/npmrc-no-auth');
+    assert.strictEqual(results[0].messages[5].message, 'remove auth tokens');
+    assert.strictEqual(results[0].messages[5].line, 10);
+    assert.strictEqual(results[0].messages[5].column, 1);
+    assert.strictEqual(results[0].messages[5].endLine, 10);
+    assert.strictEqual(results[0].messages[5].endColumn, 48);
+
+    assert.strictEqual(results[0].messages[6].ruleId, 'ini/npmrc-no-auth');
+    assert.strictEqual(results[0].messages[6].message, 'remove auth tokens');
+    assert.strictEqual(results[0].messages[6].line, 11);
+    assert.strictEqual(results[0].messages[6].column, 1);
+    assert.strictEqual(results[0].messages[6].endLine, 11);
+    assert.strictEqual(results[0].messages[6].endColumn, 53);
+
+    assert.strictEqual(results[0].messages[7].ruleId, 'ini/npmrc-registry');
+    assert.strictEqual(results[0].messages[7].message, 'registry is required to match https://registry.npmjs.com/');
+    assert.strictEqual(results[0].messages[7].line, 11);
+    assert.strictEqual(results[0].messages[7].column, 34);
+    assert.strictEqual(results[0].messages[7].endLine, 11);
+    assert.strictEqual(results[0].messages[7].endColumn, 53);
   });
 });

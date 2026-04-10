@@ -173,6 +173,16 @@ rules: {
 }
 ```
 
+**`npmrc-no-auth`**: Remove any auth tokens
+
+```javascript
+rules: {
+  'ini/npmrc-no-auth': [
+    'error' // error or warn
+  ]
+}
+```
+
 ### Usage with neovim/conform
 
 To enable linting/fixing automatically in neovim via conform, you can use the 'dosini' filetype:
