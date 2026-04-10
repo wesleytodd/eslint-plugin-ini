@@ -40,8 +40,7 @@
     }
   },
   "dependencies": {
-    "@eslint/plugin-kit": "^0.5.1",
-    "ini": "^6.0.0"
+    "@eslint/plugin-kit": "^0.5.1"
   },
   "devDependencies": {
     "c8": "^11.0.0",
