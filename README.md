@@ -5,13 +5,13 @@ Lint `ini` format files (ex. `.npmrc`) along with your JavaScript.
 ## Usage
 
 ```bash
-npm install -D eslint eslint-plugin-ini
+npm install -D eslint @wesleytodd/eslint-plugin-ini
 ```
 
 ```javascript
 // eslint.config.js
 import { defineConfig } from 'eslint/config';
-import ini from 'eslint-plugin-ini';
+import ini from '@wesleytodd/eslint-plugin-ini';
 
 export default defineConfig([
   ini.configs.recommended,

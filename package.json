@@ -1,5 +1,5 @@
 {
-  "name": "eslint-plugin-ini",
+  "name": "@wesleytodd/eslint-plugin-ini",
   "version": "0.0.1",
   "description": "eslint plugin for processing ini files",
   "main": "index.js",
