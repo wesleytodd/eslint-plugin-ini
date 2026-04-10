@@ -193,7 +193,7 @@ suite('ini parser', () => {
       assert.strictEqual(doc.lines[2].tokens[5].content, 'val needs trim');
     });
 
-    test('keys with . nesting', () => {
+    test('compositeKeys: false (default))', () => {
       const str = `
         a0.b0.c0=val
         "a1.b1.c1"=val
@@ -202,6 +202,42 @@ suite('ini parser', () => {
       `;
 
       const doc = parse(str);
+      assert.strictEqual(doc.type, 'Document');
+      assert.strictEqual(doc.lines.length, 6);
+      assert.strictEqual(doc.errors.length, 0);
+
+      assert.deepStrictEqual(doc.lines[1].tokens.map((t) => t.type), ['Whitespace', 'Key', 'Delimiter', 'Value']);
+      assert.strictEqual(doc.lines[1].tokens[1].content, 'a0.b0.c0');
+      assert.strictEqual(doc.lines[1].tokens[1].keys, undefined);
+      assert.strictEqual(doc.lines[1].tokens[3].content, 'val');
+
+      assert.deepStrictEqual(doc.lines[2].tokens.map((t) => t.type), ['Whitespace', 'Key', 'Delimiter', 'Value']);
+      assert.strictEqual(doc.lines[2].tokens[1].content, 'a1.b1.c1');
+      assert.strictEqual(doc.lines[2].tokens[1].keys, undefined);
+      assert.strictEqual(doc.lines[2].tokens[3].content, 'val');
+
+      assert.deepStrictEqual(doc.lines[3].tokens.map((t) => t.type), ['Whitespace', 'Key', 'Delimiter', 'Value']);
+      assert.strictEqual(doc.lines[3].tokens[1].content, 'a2\\.b2\\.c2');
+      assert.strictEqual(doc.lines[3].tokens[1].keys, undefined);
+      assert.strictEqual(doc.lines[3].tokens[3].content, 'val');
+
+      assert.deepStrictEqual(doc.lines[4].tokens.map((t) => t.type), ['Whitespace', 'Key', 'Delimiter', 'Value']);
+      assert.strictEqual(doc.lines[4].tokens[1].content, 'a3\\.b3\\.c3');
+      assert.strictEqual(doc.lines[4].tokens[1].keys, undefined);
+      assert.strictEqual(doc.lines[4].tokens[3].content, 'val');
+    });
+
+    test('compositeKeys: true', () => {
+      const str = `
+        a0.b0.c0=val
+        "a1.b1.c1"=val
+        a2\\.b2\\.c2=val
+        "a3\\.b3\\.c3"=val
+      `;
+
+      const doc = parse(str, {
+        compositeKeys: true
+      });
       assert.strictEqual(doc.type, 'Document');
       assert.strictEqual(doc.lines.length, 6);
       assert.strictEqual(doc.errors.length, 0);
