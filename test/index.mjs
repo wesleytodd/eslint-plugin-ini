@@ -66,6 +66,9 @@ suite('eslint-plugin-ini', () => {
           ini: plugin
         },
         language: 'ini/ini',
+        languageOptions: {
+          compositeKeys: true
+        },
         rules: {
           'ini/require-field': ['error', [
             'foo',
@@ -80,8 +83,6 @@ suite('eslint-plugin-ini', () => {
     const results = await eslint.lintText('[foo.bar]\nbaz.bam=wiz', {
       filePath: 'file.ini'
     });
-    // TODO: the parser needs to understand these complex
-    //  keys so that we can complain about specific sub parts
     assert.strictEqual(results.length, 1);
     assert.strictEqual(results[0].messages.length, 1);
     assert.strictEqual(results[0].messages[0].ruleId, 'ini/require-field');
