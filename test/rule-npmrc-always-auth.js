@@ -21,14 +21,13 @@ suite('rule: npmrc-always-auth', () => {
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 1);
+    assert.strictEqual(results[0].messages.length, 2);
 
-    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-always-auth');
-    assert.strictEqual(results[0].messages[0].message, 'always-auth is deprecated and should be removed');
-    assert.strictEqual(results[0].messages[0].line, 7);
-    assert.strictEqual(results[0].messages[0].column, 1);
-    assert.strictEqual(results[0].messages[0].endLine, 7);
-    assert.strictEqual(results[0].messages[0].endColumn, 17);
+    for (const msg of results[0].messages) {
+      assert.strictEqual(msg.ruleId, 'ini/npmrc-always-auth');
+      assert.strictEqual(msg.message, 'always-auth is deprecated and should be removed');
+      assert(results[0].source.slice(msg.fix.range[0], msg.fix.range[1]).match(/^always-auth=(true|false)\n$/i));
+    }
   });
 
   test('remove always-auth in npmrc', async () => {
@@ -47,7 +46,7 @@ suite('rule: npmrc-always-auth', () => {
         }
       }
     });
-    const results = await eslint.lintText('always-auth=true', {
+    const results = await eslint.lintText('always-auth=true\nalways-auth=false', {
       filePath: '.npmrc'
     });
     assert.strictEqual(results.length, 1);

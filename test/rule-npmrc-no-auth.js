@@ -21,35 +21,14 @@ suite('rule: npmrc-no-auth', () => {
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 4);
+    assert.strictEqual(results[0].messages.length, 6);
 
-    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-no-auth');
-    assert.strictEqual(results[0].messages[0].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[0].line, 8);
-    assert.strictEqual(results[0].messages[0].column, 1);
-    assert.strictEqual(results[0].messages[0].endLine, 8);
-    assert.strictEqual(results[0].messages[0].endColumn, 20);
-
-    assert.strictEqual(results[0].messages[1].ruleId, 'ini/npmrc-no-auth');
-    assert.strictEqual(results[0].messages[1].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[1].line, 9);
-    assert.strictEqual(results[0].messages[1].column, 1);
-    assert.strictEqual(results[0].messages[1].endLine, 9);
-    assert.strictEqual(results[0].messages[1].endColumn, 25);
-
-    assert.strictEqual(results[0].messages[2].ruleId, 'ini/npmrc-no-auth');
-    assert.strictEqual(results[0].messages[2].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[2].line, 10);
-    assert.strictEqual(results[0].messages[2].column, 1);
-    assert.strictEqual(results[0].messages[2].endLine, 10);
-    assert.strictEqual(results[0].messages[2].endColumn, 48);
-
-    assert.strictEqual(results[0].messages[3].ruleId, 'ini/npmrc-no-auth');
-    assert.strictEqual(results[0].messages[3].message, 'remove auth tokens');
-    assert.strictEqual(results[0].messages[3].line, 11);
-    assert.strictEqual(results[0].messages[3].column, 1);
-    assert.strictEqual(results[0].messages[3].endLine, 11);
-    assert.strictEqual(results[0].messages[3].endColumn, 53);
+    for (const msg of results[0].messages) {
+      assert.strictEqual(msg.ruleId, 'ini/npmrc-no-auth');
+      assert.strictEqual(msg.message, 'remove auth tokens');
+      assert(results[0].source.slice(msg.fix.range[0], msg.fix.range[1]).match(/^(.*:)?_(auth(Token)?|password)=.*\n$/i));
+      assert.strictEqual(msg.fix.text, '');
+    }
   });
 
   test('remove auth in npmrc', async () => {
@@ -68,7 +47,14 @@ suite('rule: npmrc-no-auth', () => {
         }
       }
     });
-    const results = await eslint.lintText('_auth=asfasdfdsfsdf\n_authToken=asfasdfdsfsdf\n//registry.npmjs.com/:_auth="asdfasdasdfdasdf="\nregistry.npmjs.com/:_authToken="asdfasdasdfdasdf="', {
+    const results = await eslint.lintText(`
+_auth=asfasdfdsfsd
+_authToken=asfasdfdsfsdf
+_password=asfasdfdsfsdf
+//registry.npmjs.com/:_auth="asdfasdasdfdasdf="
+//registry.npmjs.com/:_authToken="asdfasdasdfdasdf="
+//registry.npmjs.com/:_password="asdfasdasdfdasdf="
+    `.trim(), {
       filePath: '.npmrc'
     });
     assert.strictEqual(results.length, 1);

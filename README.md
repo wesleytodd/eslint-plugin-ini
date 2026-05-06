@@ -175,6 +175,8 @@ rules: {
 
 **`npmrc-no-auth`**: Remove any auth tokens
 
+Removes (and their registry scoped variants): `_auth`, `_authToken`, `_password`
+
 ```javascript
 rules: {
   'ini/npmrc-no-auth': [
