@@ -25,7 +25,7 @@ suite('rule: npmrc-registry', () => {
     assert.strictEqual(results.length, 1);
     assert.strictEqual(results[0].messages.length, 1);
     assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-registry');
-    assert.strictEqual(results[0].messages[0].message, 'registry is required to match https://registry.npmjs.com/');
+    assert.strictEqual(results[0].messages[0].message, 'default registry is required to match https://registry.npmjs.com/');
     assert.strictEqual(results[0].messages[0].line, 1);
     assert.strictEqual(results[0].messages[0].column, 10);
     assert.strictEqual(results[0].messages[0].endLine, 1);
@@ -76,6 +76,13 @@ suite('rule: npmrc-registry', () => {
             '@bar': {
               url: 'https://registry.bar.com/',
               required: false
+            },
+            '@baz': {
+              url: 'https://registry.baz.com/'
+            },
+            '@missing': {
+              url: 'https://registry.missing.com/',
+              required: false
             }
           }, true]
         }
@@ -85,26 +92,34 @@ suite('rule: npmrc-registry', () => {
       'registry=https://registry.npmjs.com/',
       '@foo:registry=https://registry.foo.com/',
       '@bar:registry=https://registry.bar.com/',
-      '@baz:registry=https://registry.baz.com/'
+      '@baz:registry=https://registry.bad.com/',
+      '@other:registry=https://registry.other.com/'
     ].join('\n'), {
       filePath: 'fixtures/.npmrc'
     });
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 2);
+    assert.strictEqual(results[0].messages.length, 3);
 
-    assert.strictEqual(results[0].messages[0].ruleId, 'ini/npmrc-registry');
-    assert.strictEqual(results[0].messages[0].message, 'registry is required to match https://registry.npmjs.com');
-    assert.strictEqual(results[0].messages[0].line, 1);
-    assert.strictEqual(results[0].messages[0].column, 10);
-    assert.strictEqual(results[0].messages[0].endLine, 1);
-    assert.strictEqual(results[0].messages[0].endColumn, 37);
+    for (const msg of results[0].messages) {
+      assert.strictEqual(msg.ruleId, 'ini/npmrc-registry');
+      switch (msg.messageId) {
+        case 'incorrectDefaultRegistry':
+          assert.strictEqual(msg.message, 'default registry is required to match https://registry.npmjs.com');
+          break;
+        case 'incorrectScopedRegistry':
+          assert.strictEqual(msg.message, 'registry for @baz is required to match https://registry.baz.com/');
+          break;
+        case 'unknownRegistry':
+          assert.strictEqual(msg.message, 'unknown registry for @other');
+          break;
 
-    assert.strictEqual(results[0].messages[1].ruleId, 'ini/npmrc-registry');
-    assert.strictEqual(results[0].messages[1].message, 'unknown registry for @baz');
-    assert.strictEqual(results[0].messages[1].line, 4);
-    assert.strictEqual(results[0].messages[1].column, 1);
-    assert.strictEqual(results[0].messages[1].endLine, 4);
-    assert.strictEqual(results[0].messages[1].endColumn, 40);
+        default:
+          throw new Error(`unrecognized messageId ${msg.messageId}`);
+      }
+
+      // Should not error or complain about the not-required @missing scope
+      assert(!msg.message.includes('@missing'));
+    }
   });
 
   test('fix required and optional registries', async () => {
