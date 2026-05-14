@@ -44,4 +44,21 @@ suite('npmrc config', () => {
     assert.strictEqual(results[0].messages.length, 0);
     assert.notStrictEqual(results[0].source, results[0].output);
   });
+
+  test('reports .npmrc findings in case there are more than two keys', async () => {
+    const eslint = new ESLint({
+      cwd: import.meta.dirname,
+      overrideConfigFile: true,
+      overrideConfig: plugin.configs.npmrc
+    });
+
+    const results = await eslint.lintText(`
+      _auth = dummy-token
+      _auth = dummy-token
+      _auth = dummy-token
+      `, { filePath: '.npmrc' });
+
+    const duplicateKeyFindings = results[0].messages.filter(o => o.ruleId === 'ini/duplicate-keys');
+    assert.strictEqual(duplicateKeyFindings.length, 3);
+  });
 });
