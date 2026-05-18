@@ -45,20 +45,31 @@ suite('npmrc config', () => {
     assert.notStrictEqual(results[0].source, results[0].output);
   });
 
-  test('reports .npmrc findings in case there are more than two keys', async () => {
+  test('fixes .npmrc findings in case there are more than two keys', async () => {
     const eslint = new ESLint({
       cwd: import.meta.dirname,
       overrideConfigFile: true,
-      overrideConfig: plugin.configs.npmrc
+      overrideConfig: plugin.configs.npmrc,
+      fix: true
     });
 
-    const results = await eslint.lintText(`
-      _auth = dummy-token
-      _auth = dummy-token
-      _auth = dummy-token
-      `, { filePath: '.npmrc' });
+    const results = await eslint.lintText([
+      // Tests that this plays well with registry fix
+      'registry=https://registry.npmjs.com/',
+      'registry=https://registry.npmjs.com/',
+      'registry=https://registry.other.com/',
+      // Tests that this plays well with no-auth
+      '_auth=dummy-token',
+      '_auth=dummy-token',
+      '_auth=dummy-token',
+      // Tests that this plays well other keys that wont be removed
+      'min-release-age=1',
+      'min-release-age=1',
+      'min-release-age=1'
+    ].join('\n'), { filePath: '.npmrc' });
 
     const duplicateKeyFindings = results[0].messages.filter(o => o.ruleId === 'ini/duplicate-keys');
-    assert.strictEqual(duplicateKeyFindings.length, 3);
+    assert.strictEqual(duplicateKeyFindings.length, 0);
+    assert.strictEqual(results[0].output, 'registry=https://registry.npmjs.com/\nmin-release-age=1\n');
   });
 });
