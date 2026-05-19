@@ -185,7 +185,7 @@ rules: {
 }
 ```
 
-**`npmrc-ssl-strict`**: Require/disallow `ssl-strict=true|false` 
+**`npmrc-ssl-strict`**: Require, disallow, or set `ssl-strict` 
 
 ```javascript
 rules: {
@@ -196,6 +196,7 @@ rules: {
 }
 ```
 
+
 **`npmrc-legacy-bundling`**: Remove deprecated `legacy-bundling` setting
 
 ```javascript
@@ -205,6 +206,7 @@ rules: {
   ]
 }
 ```
+
 
 ### Usage with neovim/conform
 
