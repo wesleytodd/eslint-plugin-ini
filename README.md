@@ -185,7 +185,7 @@ rules: {
 }
 ```
 
-**`npmrc-ssl-strict`**: Require/disallow `ssl-strict=true|false` 
+**`npmrc-ssl-strict`**: Require, disallow, or set `ssl-strict` 
 
 ```javascript
 rules: {
