@@ -163,12 +163,12 @@ rules: {
 }
 ```
 
-**`npmrc-always-auth`**: Remove deprecated always-auth field
+**`npmrc-always-auth`**: Remove deprecated `always-auth` field (including registry scoped variants)
 
 ```javascript
 rules: {
   'ini/npmrc-always-auth': [
-    'error' // error or warn
+    'error' // off, error, or warn
   ]
 }
 ```
