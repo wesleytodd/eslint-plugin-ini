@@ -17,7 +17,7 @@ suite('npmrc config', () => {
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 13);
+    assert.strictEqual(results[0].messages.length, 17);
 
     for (const msg of results[0].messages) {
       switch (msg.ruleId) {
