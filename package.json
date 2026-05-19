@@ -12,9 +12,11 @@
   "scripts": {
     "setup": "npm install",
     "setup:ci": "npm ci",
-    "test": "mocha",
+    "test": "npm run test:eslint9 && npm run test:eslint10",
+    "test:eslint9": "TEST_ESLINT_IMPORT=eslint9 mocha",
+    "test:eslint10": "TEST_ESLINT_IMPORT=eslint10 mocha",
     "test:inspect": "mocha --inspect --inspect-brk",
-    "test:cover": "c8 mocha",
+    "test:cover": "TEST_ESLINT_IMPORT=eslint10 c8 mocha",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prerelease": "git pull --ff-only && npm run lint && npm test && npm version \"${RELEASE_AS:-patch}\" && npm login",
@@ -42,12 +44,17 @@
       "onFail": "warn"
     }
   },
+  "peerDependencies": {
+    "eslint": "9.x || 10.x"
+  },
   "dependencies": {
     "@eslint/plugin-kit": "^0.5.1"
   },
   "devDependencies": {
     "c8": "^11.0.0",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
+    "eslint10": "npm:eslint@^10.4.0",
+    "eslint9": "npm:eslint@^9.39.4",
     "mocha": "^11.7.5",
     "neostandard": "^0.13.0"
   }
