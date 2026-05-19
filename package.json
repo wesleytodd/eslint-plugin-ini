@@ -15,7 +15,7 @@
     "test": "npm run test:eslint9 && npm run test:eslint10",
     "test:eslint9": "TEST_ESLINT_IMPORT=eslint9 mocha",
     "test:eslint10": "TEST_ESLINT_IMPORT=eslint10 mocha",
-    "test:inspect": "mocha --inspect --inspect-brk",
+    "test:inspect": "npm run test:eslint10 -- --inspect --inspect-brk",
     "test:cover": "TEST_ESLINT_IMPORT=eslint10 c8 mocha",
     "lint": "eslint",
     "lint:fix": "eslint --fix",

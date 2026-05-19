@@ -185,6 +185,17 @@ rules: {
 }
 ```
 
+**`npmrc-ssl-strict`**: Require/disallow `ssl-strict=true|false` 
+
+```javascript
+rules: {
+  'ini/npmrc-ssl-strict': [
+    'error', // error, warn, or off
+    'absent' // absent, true, false (as strings, uses this value directly in fixes)
+  ]
+}
+```
+
 ### Usage with neovim/conform
 
 To enable linting/fixing automatically in neovim via conform, you can use the 'dosini' filetype:
