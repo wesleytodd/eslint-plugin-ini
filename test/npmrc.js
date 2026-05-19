@@ -17,12 +17,13 @@ suite('npmrc config', () => {
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 13);
+    assert.strictEqual(results[0].messages.length, 17);
 
     for (const msg of results[0].messages) {
       switch (msg.ruleId) {
         case 'ini/npmrc-legacy-peer-deps':
         case 'ini/npmrc-registry':
+        case 'ini/npmrc-ssl-strict':
           assert.strictEqual(msg.severity, 1);
           break;
         case 'ini/npmrc-email':
