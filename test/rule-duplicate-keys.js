@@ -1,9 +1,14 @@
-import { suite, test } from 'mocha';
-import { ESLint } from 'eslint';
+import { suite, test, before } from 'mocha';
 import assert from 'node:assert';
 import plugin from '../index.js';
 
 suite('rule: duplicate-keys', () => {
+  let ESLint;
+  before(async () => {
+    const eslint = await import(process.env.TEST_ESLINT_IMPORT);
+    ESLint = eslint.ESLint;
+  });
+
   test('fixes duplicate keys when value is the same', async () => {
     const eslint = new ESLint({
       cwd: import.meta.dirname,
