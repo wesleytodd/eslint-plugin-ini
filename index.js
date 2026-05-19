@@ -13,6 +13,7 @@ import npmrcAlwaysAuth from './lib/rules/npmrc/always-auth.js';
 import npmrcNoAuth from './lib/rules/npmrc/no-auth.js';
 import npmrcSSLStrict from './lib/rules/npmrc/ssl-strict.js';
 import npmrcLegacyBundling from './lib/rules/npmrc/legacy-bundling.js';
+import npmrcEngineStrict from './lib/rules/npmrc/engine-strict.js';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
@@ -35,7 +36,8 @@ const plugin = {
     'npmrc-always-auth': npmrcAlwaysAuth,
     'npmrc-no-auth': npmrcNoAuth,
     'npmrc-ssl-strict': npmrcSSLStrict,
-    'npmrc-legacy-bundling': npmrcLegacyBundling
+    'npmrc-legacy-bundling': npmrcLegacyBundling,
+    'npmrc-engine-strict': npmrcEngineStrict
   },
   configs: { }
 };
@@ -69,7 +71,8 @@ plugin.configs.npmrc = {
     'ini/npmrc-always-auth': ['error'],
     'ini/npmrc-no-auth': ['error'],
     'ini/npmrc-ssl-strict': ['warn'],
-    'ini/npmrc-legacy-bundling': ['error']
+    'ini/npmrc-legacy-bundling': ['error'],
+    'ini/npmrc-engine-strict': ['off']
   }
 };
 

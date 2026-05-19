@@ -196,6 +196,16 @@ rules: {
 }
 ```
 
+**`npmrc-engine-strict`**: Require, disallow or set `engines-strict`
+
+```javascript
+rules: {
+  'ini/npmrc-engine-strict': [
+    'error', // off, error, or warn
+    'absent' // absent, true, false (as strings, uses this value directly in fixes)
+  ]
+}
+```
 
 **`npmrc-legacy-bundling`**: Remove deprecated `legacy-bundling` setting
 
@@ -206,7 +216,6 @@ rules: {
   ]
 }
 ```
-
 
 ### Usage with neovim/conform
 
