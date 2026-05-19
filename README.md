@@ -185,6 +185,17 @@ rules: {
 }
 ```
 
+**`npmrc-engine-strict`**: Require, disallow or set `engines-strict`
+
+```javascript
+rules: {
+  'ini/npmrc-engine-strict': [
+    'error', // off, error, or warn
+    'absent' // absent, true, false (as strings, uses this value directly in fixes)
+  ]
+}
+```
+
 ### Usage with neovim/conform
 
 To enable linting/fixing automatically in neovim via conform, you can use the 'dosini' filetype:

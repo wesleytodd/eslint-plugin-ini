@@ -23,6 +23,7 @@ suite('npmrc config', () => {
       switch (msg.ruleId) {
         case 'ini/npmrc-legacy-peer-deps':
         case 'ini/npmrc-registry':
+        case 'ini/npmrc-engine-strict':
           assert.strictEqual(msg.severity, 1);
           break;
         case 'ini/npmrc-email':
