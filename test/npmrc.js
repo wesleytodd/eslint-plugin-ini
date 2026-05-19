@@ -17,7 +17,7 @@ suite('npmrc config', () => {
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 17);
+    assert.strictEqual(results[0].messages.length, 21);
 
     for (const msg of results[0].messages) {
       switch (msg.ruleId) {
@@ -30,6 +30,7 @@ suite('npmrc config', () => {
         case 'ini/npmrc-always-auth':
         case 'ini/duplicate-keys':
         case 'ini/npmrc-no-auth':
+        case 'ini/npmrc-legacy-bundling':
           assert.strictEqual(msg.severity, 2);
           break;
         default:

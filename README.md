@@ -196,6 +196,18 @@ rules: {
 }
 ```
 
+
+**`npmrc-legacy-bundling`**: Remove deprecated `legacy-bundling` setting
+
+```javascript
+rules: {
+  'ini/npmrc-legacy-bundling': [
+    'error' // off, error, or warn
+  ]
+}
+```
+
+
 ### Usage with neovim/conform
 
 To enable linting/fixing automatically in neovim via conform, you can use the 'dosini' filetype:

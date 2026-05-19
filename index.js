@@ -12,6 +12,7 @@ import npmrcEmail from './lib/rules/npmrc/email.js';
 import npmrcAlwaysAuth from './lib/rules/npmrc/always-auth.js';
 import npmrcNoAuth from './lib/rules/npmrc/no-auth.js';
 import npmrcSSLStrict from './lib/rules/npmrc/ssl-strict.js';
+import npmrcLegacyBundling from './lib/rules/npmrc/legacy-bundling.js';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
@@ -33,7 +34,8 @@ const plugin = {
     'npmrc-email': npmrcEmail,
     'npmrc-always-auth': npmrcAlwaysAuth,
     'npmrc-no-auth': npmrcNoAuth,
-    'npmrc-ssl-strict': npmrcSSLStrict
+    'npmrc-ssl-strict': npmrcSSLStrict,
+    'npmrc-legacy-bundling': npmrcLegacyBundling
   },
   configs: { }
 };
@@ -66,7 +68,8 @@ plugin.configs.npmrc = {
     'ini/npmrc-email': ['error'],
     'ini/npmrc-always-auth': ['error'],
     'ini/npmrc-no-auth': ['error'],
-    'ini/npmrc-ssl-strict': ['warn']
+    'ini/npmrc-ssl-strict': ['warn'],
+    'ini/npmrc-legacy-bundling': ['error']
   }
 };
 
