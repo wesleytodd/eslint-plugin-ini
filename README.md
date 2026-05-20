@@ -64,12 +64,16 @@ export default defineConfig([
 
 #### Rules
 
+##### Basic
+
 **`require-field`**: Require fields to be present
+
+Fixable: :x:
 
 ```javascript
 rules: {
   'ini/require-field': [
-    'error', // error or warn
+    'error', // off, error, or warn
     ['foo', 'bar'] // list of required fields
   ]
 }
@@ -77,10 +81,12 @@ rules: {
 
 **`delim-whitespace`**: Standardize whitespace around the `=` delimiter
 
+Fixable: :white_check_mark:
+
 ```javascript
 rules: {
   'ini/delim-whitespace': [
-    'error', // error or warn
+    'error', // off, error, or warn
     'none' // none or single-space
   ]
 }
@@ -88,32 +94,40 @@ rules: {
 
 **`trailing-whitespace`**: Remove trailing whitespace on lines
 
+Fixable: :white_check_mark:
+
 ```javascript
 rules: {
   'ini/trailing-whitespace': [
-    'error' // error or warn
+    'error' // off, error, or warn
   ]
 }
 ```
 
 **`duplicate-keys`**: Disallow duplicate keys
 
+Fixable: :heavy_exclamation_mark: Will remove the line if the *values* match.
+
 ```javascript
 rules: {
   'ini/duplicate-keys': [
-    'error' // error or warn
+    'error' // off, error, or warn
   ]
 }
 ```
 
+##### .npmrc
+
 **`npmrc-registry`**: Set registry configurations
+
+Fixable: :white_check_mark:
 
 ```javascript
 rules: {
   'ini/npmrc-registry': [
-    'error', // error or warn
+    'warn', // off, error, or warn
     'https://registry.npmjs.com/', // a default registry url or an object (see below)
-    true // strict mode disallows unknown registries
+    false // `strict: true`` mode disallows unknown registries
   ]
 }
 ```
@@ -123,7 +137,7 @@ Setting scoped registries and optional registries can be done by passing an obje
 ```javascript
 rules: {
   'ini/npmrc-registry': [
-    'error', // error or warn
+    'error', // off, error, or warn
     {
       // Can still set a string URL value
       default: 'https://registry.npmjs.com',
@@ -142,28 +156,37 @@ rules: {
 }
 ```
 
-**`npmrc-legacy-peer-deps`**: Require fields to be present
+*Strict mode* (the third option) will remove additional scoped registries which are not present in the options. It will
+*not* remove optional registries but *will* ensure they point to the right url if they are present.
+
+**`npmrc-legacy-peer-deps`**: Require, disallow, or set `legacy-peer-deps`
+
+Fixable: :white_check_mark:
 
 ```javascript
 rules: {
   'ini/npmrc-legacy-peer-deps': [
-    'error', // error or warn
+    'warn', // off, error, or warn
     'absent' // absent, true, false (as strings, uses this value directly in fixes)
   ]
 }
 ```
 
-**`npmrc-email`**: Remove deprecated email field
+**`npmrc-email`**: Remove deprecated `email` field
+
+Fixable: :white_check_mark:
 
 ```javascript
 rules: {
   'ini/npmrc-email': [
-    'error' // error or warn
+    'error' // off, error, or warn
   ]
 }
 ```
 
 **`npmrc-always-auth`**: Remove deprecated `always-auth` field (including registry scoped variants)
+
+Fixable: :white_check_mark:
 
 ```javascript
 rules: {
@@ -175,22 +198,26 @@ rules: {
 
 **`npmrc-no-auth`**: Remove any auth tokens
 
+Fixable: :white_check_mark:
+
 Removes (and their registry scoped variants): `_auth`, `_authToken`, `_password`
 
 ```javascript
 rules: {
   'ini/npmrc-no-auth': [
-    'error' // error or warn
+    'error' // off, error, or warn
   ]
 }
 ```
 
 **`npmrc-ssl-strict`**: Require, disallow, or set `ssl-strict` 
 
+Fixable: :white_check_mark:
+
 ```javascript
 rules: {
   'ini/npmrc-ssl-strict': [
-    'error', // error, warn, or off
+    'warn', // off, error, or warn
     'absent' // absent, true, false (as strings, uses this value directly in fixes)
   ]
 }
@@ -198,16 +225,20 @@ rules: {
 
 **`npmrc-engine-strict`**: Require, disallow or set `engines-strict`
 
+Fixable: :white_check_mark:
+
 ```javascript
 rules: {
   'ini/npmrc-engine-strict': [
-    'error', // off, error, or warn
+    'off', // off, error, or warn
     'absent' // absent, true, false (as strings, uses this value directly in fixes)
   ]
 }
 ```
 
 **`npmrc-legacy-bundling`**: Remove deprecated `legacy-bundling` setting
+
+Fixable: :white_check_mark:
 
 ```javascript
 rules: {
