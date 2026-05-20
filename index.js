@@ -11,7 +11,7 @@ import npmrcLegacyPeerDeps from './lib/rules/npmrc/legacy-peer-deps.js';
 import npmrcEmail from './lib/rules/npmrc/email.js';
 import npmrcAlwaysAuth from './lib/rules/npmrc/always-auth.js';
 import npmrcNoAuth from './lib/rules/npmrc/no-auth.js';
-import npmrcSSLStrict from './lib/rules/npmrc/ssl-strict.js';
+import npmrcSSLStrict from './lib/rules/npmrc/strict-ssl.js';
 import npmrcLegacyBundling from './lib/rules/npmrc/legacy-bundling.js';
 import npmrcEngineStrict from './lib/rules/npmrc/engine-strict.js';
 
@@ -35,7 +35,7 @@ const plugin = {
     'npmrc-email': npmrcEmail,
     'npmrc-always-auth': npmrcAlwaysAuth,
     'npmrc-no-auth': npmrcNoAuth,
-    'npmrc-ssl-strict': npmrcSSLStrict,
+    'npmrc-strict-ssl': npmrcSSLStrict,
     'npmrc-legacy-bundling': npmrcLegacyBundling,
     'npmrc-engine-strict': npmrcEngineStrict
   },
@@ -70,7 +70,7 @@ plugin.configs.npmrc = {
     'ini/npmrc-email': ['error'],
     'ini/npmrc-always-auth': ['error'],
     'ini/npmrc-no-auth': ['error'],
-    'ini/npmrc-ssl-strict': ['warn'],
+    'ini/npmrc-strict-ssl': ['warn'],
     'ini/npmrc-legacy-bundling': ['error'],
     'ini/npmrc-engine-strict': ['off']
   }
