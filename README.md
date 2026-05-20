@@ -210,13 +210,13 @@ rules: {
 }
 ```
 
-**`npmrc-ssl-strict`**: Require, disallow, or set `ssl-strict` 
+**`npmrc-strict-ssl`**: Require, disallow, or set `strict-ssl` 
 
 Fixable: :white_check_mark:
 
 ```javascript
 rules: {
-  'ini/npmrc-ssl-strict': [
+  'ini/npmrc-strict-ssl': [
     'warn', // off, error, or warn
     'absent' // absent, true, false (as strings, uses this value directly in fixes)
   ]
