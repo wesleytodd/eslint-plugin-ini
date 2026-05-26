@@ -1,6 +1,8 @@
 import fs from 'fs';
 import INIParser from './lib/language.js';
 
+import stylistic from '@stylistic/eslint-plugin';
+
 import requireFieldRule from './lib/rules/require-field.js';
 import delimWhitespace from './lib/rules/delim-whitespace.js';
 import trailingWhitespace from './lib/rules/trailing-whitespace.js';
@@ -45,6 +47,7 @@ const plugin = {
 plugin.configs.recommended = {
   name: 'ini/recommended',
   plugins: {
+    '@stylistic': stylistic,
     ini: plugin
   },
   language: 'ini/ini',
@@ -52,14 +55,15 @@ plugin.configs.recommended = {
   rules: {
     'ini/delim-whitespace': ['error', 'none'],
     'ini/trailing-whitespace': ['error'],
-    'ini/duplicate-keys': ['error']
+    'ini/duplicate-keys': ['error'],
+    '@stylistic/eol-last': ['error', 'always']
   }
 };
 
 plugin.configs.npmrc = {
   name: 'ini/npmrc',
   plugins: {
-    ini: plugin
+    ...plugin.configs.recommended.plugins
   },
   language: 'ini/ini',
   files: ['**/.npmrc'],
