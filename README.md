@@ -248,6 +248,19 @@ rules: {
 }
 ```
 
+**`npmrc-package-lock`**: Require, disallow or set `package-lock`
+
+Fixable: :white_check_mark:
+
+```javascript
+rules: {
+  'ini/npmrc-package-lock': [
+    'error', // off, error, or warn
+    'absent' // absent, true, false (as strings, uses this value directly in fixes)
+  ]
+}
+```
+
 ### Usage with neovim/conform
 
 To enable linting/fixing automatically in neovim via conform, you can use the 'dosini' filetype:
