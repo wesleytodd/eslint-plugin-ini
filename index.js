@@ -16,6 +16,7 @@ import npmrcNoAuth from './lib/rules/npmrc/no-auth.js';
 import npmrcSSLStrict from './lib/rules/npmrc/strict-ssl.js';
 import npmrcLegacyBundling from './lib/rules/npmrc/legacy-bundling.js';
 import npmrcEngineStrict from './lib/rules/npmrc/engine-strict.js';
+import npmrcPackageLock from './lib/rules/npmrc/package-lock.js';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
@@ -39,7 +40,8 @@ const plugin = {
     'npmrc-no-auth': npmrcNoAuth,
     'npmrc-strict-ssl': npmrcSSLStrict,
     'npmrc-legacy-bundling': npmrcLegacyBundling,
-    'npmrc-engine-strict': npmrcEngineStrict
+    'npmrc-engine-strict': npmrcEngineStrict,
+    'npmrc-package-lock': npmrcPackageLock
   },
   configs: { }
 };
@@ -76,7 +78,8 @@ plugin.configs.npmrc = {
     'ini/npmrc-no-auth': ['error'],
     'ini/npmrc-strict-ssl': ['warn'],
     'ini/npmrc-legacy-bundling': ['error'],
-    'ini/npmrc-engine-strict': ['off']
+    'ini/npmrc-engine-strict': ['off'],
+    'ini/npmrc-package-lock': ['error']
   }
 };
 

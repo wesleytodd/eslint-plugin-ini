@@ -17,7 +17,7 @@ suite('npmrc config', () => {
     });
     const results = await eslint.lintFiles('fixtures/.npmrc');
     assert.strictEqual(results.length, 1);
-    assert.strictEqual(results[0].messages.length, 25);
+    assert.strictEqual(results[0].messages.length, 29);
 
     for (const msg of results[0].messages) {
       switch (msg.ruleId) {
@@ -32,10 +32,11 @@ suite('npmrc config', () => {
         case 'ini/duplicate-keys':
         case 'ini/npmrc-no-auth':
         case 'ini/npmrc-legacy-bundling':
+        case 'ini/npmrc-package-lock':
           assert.strictEqual(msg.severity, 2);
           break;
         default:
-          throw new Error(`found unexpeced rule message: ${msg.ruleId}`);
+          throw new Error(`found unexpeced rule message: ${msg.ruleId} with severity ${msg.severity}`);
       }
     }
   });
